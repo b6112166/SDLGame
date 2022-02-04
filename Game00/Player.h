@@ -15,8 +15,9 @@ public:
 	void itemAquire(int);
 	void damagedBy(int);
 	void destroy();
-	void moveHorizontal(bool right);
-	void moveVertical(bool up);
+	void move(direction);
+
+
 	
 	bool getCurrentDirection() { return faceDirection; };
 

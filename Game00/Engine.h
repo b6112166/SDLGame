@@ -3,6 +3,9 @@
 #include "SDL/SDL_image.h"
 #include <iostream>
 #include "Player.h"
+
+extern enum direction;
+
 using namespace std;
 
 class Engine

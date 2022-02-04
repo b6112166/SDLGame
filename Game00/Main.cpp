@@ -2,7 +2,7 @@
 #include <iostream>
 #include "Engine.h"
 using namespace std;
-const int MAXFPS = 144;
+const int MAXFPS = 60;
 const int FRAMEDELAY = 1000 / MAXFPS;
 const int WIDTH = 800;
 const int HEIGHT = 600;

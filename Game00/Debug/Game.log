@@ -1,19 +1,19 @@
-﻿  Engine.cpp
-  Entity.cpp
-  Main.cpp
-  Player.cpp
-  Generating Code...
-  Game.vcxproj -> H:\school\cmpt-1267\Game00_a\Game00\Debug\Game.exe
-  H:\school\cmpt-1267\Game00_a\Game00\\..\external\SDL\lib\win\x86\libfreetype-6.dll
-  H:\school\cmpt-1267\Game00_a\Game00\\..\external\SDL\lib\win\x86\libogg-0.dll
-  H:\school\cmpt-1267\Game00_a\Game00\\..\external\SDL\lib\win\x86\libpng16-16.dll
-  H:\school\cmpt-1267\Game00_a\Game00\\..\external\SDL\lib\win\x86\libvorbis-0.dll
-  H:\school\cmpt-1267\Game00_a\Game00\\..\external\SDL\lib\win\x86\libvorbisfile-3.dll
-  H:\school\cmpt-1267\Game00_a\Game00\\..\external\SDL\lib\win\x86\SDL2.dll
-  H:\school\cmpt-1267\Game00_a\Game00\\..\external\SDL\lib\win\x86\SDL2_image.dll
-  H:\school\cmpt-1267\Game00_a\Game00\\..\external\SDL\lib\win\x86\SDL2_mixer.dll
-  H:\school\cmpt-1267\Game00_a\Game00\\..\external\SDL\lib\win\x86\SDL2_ttf.dll
-  H:\school\cmpt-1267\Game00_a\Game00\\..\external\SDL\lib\win\x86\zlib1.dll
+﻿  Main.cpp
+C:\Users\300336645\Desktop\myGame\Game00\Entity.h(2,102): warning C4091: 'extern ': ignored on left of 'direction' when no variable is declared
+C:\Users\300336645\Desktop\myGame\Game00\Entity.h(8,17): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
+C:\Users\300336645\Desktop\myGame\Game00\Entity.h(8,26): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
+C:\Users\300336645\Desktop\myGame\Game00\Engine.h(7,22): warning C4091: 'extern ': ignored on left of 'direction' when no variable is declared
+  Game.vcxproj -> C:\Users\300336645\Desktop\myGame\Game00\Debug\Game.exe
+  C:\Users\300336645\Desktop\myGame\Game00\\..\external\SDL\lib\win\x86\libfreetype-6.dll
+  C:\Users\300336645\Desktop\myGame\Game00\\..\external\SDL\lib\win\x86\libogg-0.dll
+  C:\Users\300336645\Desktop\myGame\Game00\\..\external\SDL\lib\win\x86\libpng16-16.dll
+  C:\Users\300336645\Desktop\myGame\Game00\\..\external\SDL\lib\win\x86\libvorbis-0.dll
+  C:\Users\300336645\Desktop\myGame\Game00\\..\external\SDL\lib\win\x86\libvorbisfile-3.dll
+  C:\Users\300336645\Desktop\myGame\Game00\\..\external\SDL\lib\win\x86\SDL2.dll
+  C:\Users\300336645\Desktop\myGame\Game00\\..\external\SDL\lib\win\x86\SDL2_image.dll
+  C:\Users\300336645\Desktop\myGame\Game00\\..\external\SDL\lib\win\x86\SDL2_mixer.dll
+  C:\Users\300336645\Desktop\myGame\Game00\\..\external\SDL\lib\win\x86\SDL2_ttf.dll
+  C:\Users\300336645\Desktop\myGame\Game00\\..\external\SDL\lib\win\x86\zlib1.dll
   10 File(s) copied
-  H:\school\cmpt-1267\Game00_a\Game00\\..\external\GLEW\lib\win\x86\glew32.dll
+  C:\Users\300336645\Desktop\myGame\Game00\\..\external\GLEW\lib\win\x86\glew32.dll
   1 File(s) copied

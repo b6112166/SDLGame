@@ -1,7 +1,10 @@
 #include "Engine.h"
 using namespace std;
 
+extern enum direciton
+{
 
+};
 
 
 Engine::Engine() 
@@ -52,11 +55,18 @@ void Engine::init(const char* title, int xpos, int ypos, int width, int height, 
 				isRunning = true;
 			}
 
-			SDL_Surface* tempSurface = IMG_Load("assets/characters.png");
+			SDL_Surface* tempSurface = IMG_Load("assets/ball.png");
 			playerTexture = SDL_CreateTextureFromSurface(renderer, tempSurface);
+			SDL_Rect  tempRect = { 0,0, tempSurface->w ,tempSurface->h };
 
-			playerRect
+			playerRect = new SDL_Rect( tempRect );
 
+			
+			SDL_FreeSurface(tempSurface);
+			tempSurface = nullptr;
+
+
+			mainPlayer = new Player();
 
 		}
 	}
@@ -73,50 +83,98 @@ void Engine::handleEvents()
 		switch (e.type) {
 			case SDL_QUIT:
 				isRunning = false;
-			case SDL_KEYDOWN: 
+			/*case SDL_KEYDOWN:
 
-				//movement
+				
 				if (e.key.keysym.sym == SDLK_w) 
 				{
-					mainPlayer->moveVertical(true);
+					mainPlayer->move(d_up);
 				}
 				else if (e.key.keysym.sym == SDLK_s) 
 				{
-					mainPlayer->moveVertical(false);
+					mainPlayer->move(d_down);
 				}
 				else if (e.key.keysym.sym == SDLK_a) 
 				{
-					mainPlayer->moveHorizontal(false);
+					mainPlayer->move(d_left);
 				}
 				else if (e.key.keysym.sym == SDLK_d) 
 				{
-					mainPlayer->moveHorizontal(true);
+					mainPlayer->move(d_right);
 				}
-
+				
 				break;
 				
 			
-				
+			*/
+
 			default:
 				break;
 
 		}
 	}
+	//movement
+
+	const Uint8* state = SDL_GetKeyboardState(NULL);
+	//check diagonals first
+	if (state[SDL_SCANCODE_W]&&state[SDL_SCANCODE_A]) 
+	{
+		mainPlayer->move(d_upleft);
+	}
+	else if (state[SDL_SCANCODE_W] && state[SDL_SCANCODE_D]) 
+	{
+		mainPlayer->move(d_upright);
+	}
+	else if (state[SDL_SCANCODE_S] && state[SDL_SCANCODE_A]) 
+	{
+		mainPlayer->move(d_downleft);
+	}
+	else if (state[SDL_SCANCODE_S] && state[SDL_SCANCODE_D]) 
+	{
+		mainPlayer->move(d_downright);
+	}
+	else {
+		//check singular
+		if (state[SDL_SCANCODE_W]) 
+		{
+			mainPlayer->move(d_up);
+		}
+		else if (state[SDL_SCANCODE_A])
+		{
+			mainPlayer->move(d_left);
+		}
+		else if (state[SDL_SCANCODE_D])
+		{
+			mainPlayer->move(d_right);
+		}
+		else if (state[SDL_SCANCODE_S])
+		{
+			mainPlayer->move(d_down);
+		}
+
+	}
+
+
 
 }
 
 void Engine::update()
 {
 
-
+	playerRect->x = mainPlayer->getPosX();
+	playerRect->y = mainPlayer->getPosY();
 }
 
 void Engine::render()
 {
 	//clear everything
+	
+	
+
 	SDL_RenderClear(renderer);
 
 	
+	SDL_SetRenderDrawColor(renderer, 255, 2555, 255, 255);
 	SDL_RenderCopy(renderer, playerTexture, NULL, playerRect);//player render
 
 	//draw

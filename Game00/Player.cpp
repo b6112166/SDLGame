@@ -2,7 +2,7 @@
 
 
 
-Player::Player() {
+Player::Player():Entity(){
 	type = 1;
 	x = 100; 
 	y = 100;
@@ -13,28 +13,42 @@ Player::Player() {
 
 }
 
-void Player::moveHorizontal(bool right) 
+void Player::move(direction d) 
 {
-	if (right) {
-		x += movement_speed;
-		
-	}
-
-	else {
+	switch (d) {
+	case d_left:
 		x -= movement_speed;
+		break;
 	
-	}
+	case d_right:
+		x += movement_speed;
+		break;
 	
-}
-
-void Player::moveVertical(bool up) 
-{
-	if (up) {
-		y += movement_speed;
-	}
-	else {
+	case d_up:
 		y -= movement_speed;
-	}
-	
-}
+		break;
 
+	case d_down:
+		y += movement_speed;
+		break;
+	
+	case d_upleft:
+		y -= movement_speed;
+		x -= movement_speed;
+		break;
+
+	case d_upright:
+		y -= movement_speed;
+		x += movement_speed;
+		break;
+	case d_downleft:
+		y += movement_speed;
+		x -= movement_speed;
+		break;
+	case d_downright:
+		y += movement_speed;
+		x += movement_speed;
+		break;
+	}
+
+}
