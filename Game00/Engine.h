@@ -3,9 +3,8 @@
 #include "SDL/SDL_image.h"
 #include <iostream>
 #include "Player.h"
-
-extern enum direction;
-
+#include "direction.h"
+#include "string.h"
 using namespace std;
 
 class Engine
@@ -27,6 +26,9 @@ public:
 	bool running();
 
 private:
+	
+	SDL_Texture* textureLoader(string filename);
+	
 	bool isRunning;
 	SDL_Window* gameWindow;
 	SDL_Renderer* renderer;
@@ -34,7 +36,7 @@ private:
 	Player* mainPlayer;
 	SDL_Rect* enemyRectList;
 	SDL_Texture* playerTexture;
-	SDL_Rect* playerRect;
+	SDL_Rect playerRect;
 
 };
 

@@ -1,30 +1,35 @@
 #pragma once
 
-//charater art from https://opengameart.org/users/buch
 
-#include "Entity.h"
-class Player : public Entity
+
+#include "MovingEntity.h"
+class Player : public MovingEntity
 {
 public:
 	Player();
 
 	int getHp();
 	
-	void attack();
+	void shoot();
 	
 	void itemAquire(int);
 	void damagedBy(int);
 	void destroy();
-	void move(direction);
+	void walk(direction);
+	void update();
 
+	void stop();
 
+	void jump();
 	
-	bool getCurrentDirection() { return faceDirection; };
+	
+	direction getCurrentDirection() { return faceDirection; };
 
 	~Player() {};
 
 
 private:
+	bool jumpEnabled;
 	int HP = 100;
 	int movement_speed = 10;
 	int bomb_count =3;
@@ -32,7 +37,7 @@ private:
 	int attack_damage = 10;
 	
 
-	direction faceDirection;
+	
 	
 };
 

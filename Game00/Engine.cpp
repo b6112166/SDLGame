@@ -1,10 +1,7 @@
 #include "Engine.h"
+
 using namespace std;
 
-extern enum direciton
-{
-
-};
 
 
 Engine::Engine() 
@@ -55,15 +52,20 @@ void Engine::init(const char* title, int xpos, int ypos, int width, int height, 
 				isRunning = true;
 			}
 
-			SDL_Surface* tempSurface = IMG_Load("assets/ball.png");
-			playerTexture = SDL_CreateTextureFromSurface(renderer, tempSurface);
-			SDL_Rect  tempRect = { 0,0, tempSurface->w ,tempSurface->h };
+			
 
-			playerRect = new SDL_Rect( tempRect );
+			//texture loader code
+			IMG_Init(IMG_INIT_PNG);
+			
+			playerTexture = textureLoader("assets/ball.png");
+		
+
+			playerRect.h = 20;
+			playerRect.w = 20;
 
 			
-			SDL_FreeSurface(tempSurface);
-			tempSurface = nullptr;
+			
+			
 
 
 			mainPlayer = new Player();
@@ -83,30 +85,10 @@ void Engine::handleEvents()
 		switch (e.type) {
 			case SDL_QUIT:
 				isRunning = false;
-			/*case SDL_KEYDOWN:
 
-				
-				if (e.key.keysym.sym == SDLK_w) 
-				{
-					mainPlayer->move(d_up);
-				}
-				else if (e.key.keysym.sym == SDLK_s) 
-				{
-					mainPlayer->move(d_down);
-				}
-				else if (e.key.keysym.sym == SDLK_a) 
-				{
-					mainPlayer->move(d_left);
-				}
-				else if (e.key.keysym.sym == SDLK_d) 
-				{
-					mainPlayer->move(d_right);
-				}
-				
-				break;
-				
+				//keyboard controls (keydown)
 			
-			*/
+			
 
 			default:
 				break;
@@ -114,55 +96,44 @@ void Engine::handleEvents()
 		}
 	}
 	//movement
-
+	/**/
+	// Get state of keyboard
 	const Uint8* state = SDL_GetKeyboardState(NULL);
-	//check diagonals first
-	if (state[SDL_SCANCODE_W]&&state[SDL_SCANCODE_A]) 
+	
+	if ((!state[SDL_SCANCODE_A] && !state[SDL_SCANCODE_D])||(state[SDL_SCANCODE_A]&&state[SDL_SCANCODE_D]))//not moving
 	{
-		mainPlayer->move(d_upleft);
+		mainPlayer->stop();
 	}
-	else if (state[SDL_SCANCODE_W] && state[SDL_SCANCODE_D]) 
+	else
 	{
-		mainPlayer->move(d_upright);
-	}
-	else if (state[SDL_SCANCODE_S] && state[SDL_SCANCODE_A]) 
-	{
-		mainPlayer->move(d_downleft);
-	}
-	else if (state[SDL_SCANCODE_S] && state[SDL_SCANCODE_D]) 
-	{
-		mainPlayer->move(d_downright);
-	}
-	else {
-		//check singular
-		if (state[SDL_SCANCODE_W]) 
+		if (state[SDL_SCANCODE_A]) 
 		{
-			mainPlayer->move(d_up);
+			mainPlayer->walk(direction::d_left);
 		}
-		else if (state[SDL_SCANCODE_A])
+		//left 
+		else if (state[SDL_SCANCODE_D]) 
 		{
-			mainPlayer->move(d_left);
+			mainPlayer->walk(direction::d_right);
 		}
-		else if (state[SDL_SCANCODE_D])
-		{
-			mainPlayer->move(d_right);
-		}
-		else if (state[SDL_SCANCODE_S])
-		{
-			mainPlayer->move(d_down);
-		}
+		//right
 
+		
 	}
-
-
+	if (state[SDL_SCANCODE_SPACE])
+	{
+		mainPlayer->jump();
+		cout << "jumpping";
+	}
+	//jump
 
 }
 
 void Engine::update()
 {
+	mainPlayer->update();
 
-	playerRect->x = mainPlayer->getPosX();
-	playerRect->y = mainPlayer->getPosY();
+	playerRect.x = mainPlayer->getPosX();
+	playerRect.y = mainPlayer->getPosY();
 }
 
 void Engine::render()
@@ -175,7 +146,7 @@ void Engine::render()
 
 	
 	SDL_SetRenderDrawColor(renderer, 255, 2555, 255, 255);
-	SDL_RenderCopy(renderer, playerTexture, NULL, playerRect);//player render
+	SDL_RenderCopy(renderer, playerTexture, NULL, &playerRect);//player render
 
 	//draw
 	SDL_RenderPresent(renderer);
@@ -188,4 +159,16 @@ void Engine::clean()
 	SDL_DestroyRenderer(renderer);
 	SDL_Quit();
 	cout << "Game exited,cya!"<<endl;
+}
+
+
+SDL_Texture* Engine::textureLoader(string filename) {
+	SDL_Surface* tempSurface = IMG_Load(filename.c_str());
+
+	SDL_Texture *resultText = SDL_CreateTextureFromSurface(renderer, tempSurface);
+
+
+	SDL_FreeSurface(tempSurface);
+	tempSurface = nullptr;
+	return resultText;
 }

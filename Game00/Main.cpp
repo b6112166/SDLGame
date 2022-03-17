@@ -2,10 +2,13 @@
 #include <iostream>
 #include "Engine.h"
 using namespace std;
+//variables for capped 60fps
 const int MAXFPS = 60;
 const int FRAMEDELAY = 1000 / MAXFPS;
+
 const int WIDTH = 800;
 const int HEIGHT = 600;
+
 int main(int argc, char* args[])
 {
 

@@ -2,53 +2,64 @@
 
 
 
-Player::Player():Entity(){
-	type = 1;
-	x = 100; 
-	y = 100;
-
-	faceDirection = d_right;
-
+Player::Player():MovingEntity(100,100,1,3){
+	
+	jumpEnabled = false;
 
 
 }
 
-void Player::move(direction d) 
+
+void Player::walk(direction d) 
+{	
+	faceDirection = d;
+	isMoving = true;
+}
+
+void Player::stop() 
 {
-	switch (d) {
-	case d_left:
-		x -= movement_speed;
-		break;
-	
-	case d_right:
-		x += movement_speed;
-		break;
-	
-	case d_up:
-		y -= movement_speed;
-		break;
+	isMoving = false;
+}
 
-	case d_down:
-		y += movement_speed;
-		break;
-	
-	case d_upleft:
-		y -= movement_speed;
-		x -= movement_speed;
-		break;
+void Player::jump() 
+{
+	if (jumpEnabled) //temp code, to be replaced with proper collision code
+	{
+		yVelocity = -10;
+		jumpEnabled = false;
+	}
+}
 
-	case d_upright:
-		y -= movement_speed;
-		x += movement_speed;
-		break;
-	case d_downleft:
-		y += movement_speed;
-		x -= movement_speed;
-		break;
-	case d_downright:
-		y += movement_speed;
-		x += movement_speed;
-		break;
+
+void Player::update()
+{
+	//movement update
+	if (isMoving)
+	{
+		//direction check
+		switch (faceDirection) {
+			//move left
+			case direction::d_left:
+					x -= movementSpeed;
+					break;
+				//move right
+			case direction::d_right:
+					x += movementSpeed;
+					break;
+		}
+
 	}
 
+	//gravity update
+	 //temp code, to be replaced with proper collision code
+	y += yVelocity;
+	if (y <= 400) {
+		yVelocity += gravity;
+		
+	}
+	else {
+		yVelocity = 0;//stop
+		jumpEnabled = true;//jump reset
+	}
+	
 }
