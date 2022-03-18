@@ -3,6 +3,7 @@
 #include<fstream>
 #include<iostream>
 #include<string>
+using namespace std;
 class Map {
 public:
 	Map(int mapNumber);
@@ -12,5 +13,5 @@ public:
 protected:
 	int** tiles;
 
-	int** LoadMap(const char* filename);
+	void LoadMap(const char* filename);
 };

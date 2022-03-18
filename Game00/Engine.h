@@ -7,6 +7,14 @@
 #include "string.h"
 using namespace std;
 
+struct Camera {
+	int x;
+	int y;
+	int w;
+	int h;
+};
+
+
 class Engine
 {
 	//handle user input
