@@ -1,6 +1,8 @@
 #include "Map.h"
 
 Map::Map(int mapNumber) {
+
+	//render tiles
 	tiles = new int* [25];
 	for (int i = 0; i < 25; i++) 
 	{
@@ -8,6 +10,7 @@ Map::Map(int mapNumber) {
 	}
 	string filename = "map" + to_string(mapNumber) + ".xml";
 	LoadMap(filename.c_str());
+
 }
 
 Map::~Map() {
@@ -30,4 +33,8 @@ void Map::LoadMap(const char* f) {
 	}
 
 	
+}
+
+int Map::getTile(int row, int col) {
+	return tiles[row][col];
 }

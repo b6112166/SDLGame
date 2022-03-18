@@ -30,6 +30,7 @@ public:
 	void update();
 	void render();
 	void clean();
+	void handleCollision();
 
 	bool running();
 
@@ -46,5 +47,6 @@ private:
 	SDL_Texture* playerTexture;
 	SDL_Rect playerRect;
 
+	
 };
 

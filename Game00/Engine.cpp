@@ -175,3 +175,14 @@ SDL_Texture* Engine::textureLoader(string filename) {
 	tempSurface = nullptr;
 	return resultText;
 }
+
+void Engine::handleCollision()
+{
+	for (int i = 0; i < 25; i++) {
+		for (int j = 0; j < 25; j++) {
+			/*if (Map.getCollisionBox(i, j) == 1)
+				checkCollision(i,Map->TILEW,j,Map->TILEH,mainPlayer->x,mainPlayer->y,mainPlayer->w,mainPlayer->h)
+			*/
+		}
+	}
+}
