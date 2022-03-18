@@ -66,9 +66,12 @@ void Engine::init(const char* title, int xpos, int ypos, int width, int height, 
 			
 			
 			
+			
 
 
 			mainPlayer = new Player();
+
+			Camera mainCamera = { mainPlayer->getPosX() - width / 2 , mainPlayer->getPosY() - width / 2, width,height};
 
 		}
 	}
