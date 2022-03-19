@@ -7,6 +7,14 @@
 #include "string.h"
 using namespace std;
 
+struct Camera {
+	int x;
+	int y;
+	int w;
+	int h;
+};
+
+
 class Engine
 {
 	//handle user input
@@ -22,6 +30,7 @@ public:
 	void update();
 	void render();
 	void clean();
+	void handleCollision();
 
 	bool running();
 
@@ -38,5 +47,6 @@ private:
 	SDL_Texture* playerTexture;
 	SDL_Rect playerRect;
 
+	
 };
 

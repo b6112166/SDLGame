@@ -66,9 +66,12 @@ void Engine::init(const char* title, int xpos, int ypos, int width, int height, 
 			
 			
 			
+			
 
 
 			mainPlayer = new Player();
+
+			Camera mainCamera = { mainPlayer->getPosX() - width / 2 , mainPlayer->getPosY() - width / 2, width,height};
 
 		}
 	}
@@ -171,4 +174,15 @@ SDL_Texture* Engine::textureLoader(string filename) {
 	SDL_FreeSurface(tempSurface);
 	tempSurface = nullptr;
 	return resultText;
+}
+
+void Engine::handleCollision()
+{
+	for (int i = 0; i < 25; i++) {
+		for (int j = 0; j < 25; j++) {
+			/*if (Map.getCollisionBox(i, j) == 1)
+				checkCollision(i,Map->TILEW,j,Map->TILEH,mainPlayer->x,mainPlayer->y,mainPlayer->w,mainPlayer->h)
+			*/
+		}
+	}
 }

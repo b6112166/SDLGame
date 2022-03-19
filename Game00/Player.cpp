@@ -54,7 +54,7 @@ void Player::update()
 	 //temp code, to be replaced with proper collision code
 	y += yVelocity;
 	if (y <= 400) {
-		yVelocity += gravity;
+		yVelocity += gravity*gravity;
 		
 	}
 	else {
