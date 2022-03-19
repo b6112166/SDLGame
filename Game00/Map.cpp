@@ -5,6 +5,6 @@ Map::Map(int mapNumber) {
 	for (int i = 0; i < 25; i++) {
 		tiles[i] = new int[25];
 	}
-	string filename = "map" + std::to_string(mapNumber) + ".xml";
-	LoadMap(filename);
+	std::string filename = "map" + std::to_string(mapNumber) + ".xml";
+	LoadMap(filename.c_str());
 }
