@@ -1,12 +1,10 @@
 #pragma once
-
-
-
 #include "MovingEntity.h"
+
 class Player : public MovingEntity
 {
 public:
-	Player();
+	Player(int x, int y, SDL_Texture* playerTexture);
 
 	int getHp();
 	
@@ -16,12 +14,13 @@ public:
 	void damagedBy(int);
 	void destroy();
 	void walk(direction);
-	void update();
+	void update() override;
 
 	void stop();
 
 	void jump();
 	
+	void render(SDL_Renderer* renderer); 
 	
 	direction getCurrentDirection() { return faceDirection; };
 
@@ -36,8 +35,9 @@ private:
 	int blast_radius =50;
 	int attack_damage = 10;
 	
+	SDL_Rect playerRect;
 
-	
+	SDL_Texture* playerTexture;
 	
 };
 

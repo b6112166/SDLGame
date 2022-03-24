@@ -5,8 +5,9 @@
 #include "Player.h"
 #include "direction.h"
 #include "string.h"
+#include "Map.h"
 using namespace std;
-
+/*
 struct Camera {
 	int x;
 	int y;
@@ -14,7 +15,7 @@ struct Camera {
 	int h;
 };
 
-
+*/
 class Engine
 {
 	//handle user input
@@ -34,19 +35,18 @@ public:
 
 	bool running();
 
-private:
-	
-	SDL_Texture* textureLoader(string filename);
-	
+protected:
+
+    Player * mainPlayer;
 	bool isRunning;
 	SDL_Window* gameWindow;
 	SDL_Renderer* renderer;
-	Entity* enemyEntityList;
-	Player* mainPlayer;
-	SDL_Rect* enemyRectList;
-	SDL_Texture* playerTexture;
-	SDL_Rect playerRect;
-
 	
+
+	Map * map;
+
+private:
+
+	SDL_Texture* loadTexture(string filename);
 };
 

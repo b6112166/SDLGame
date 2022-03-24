@@ -1,6 +1,7 @@
 #pragma once
 
 #include "direction.h"
+#include "Engine.h"
 //interface class
 class Entity
 {

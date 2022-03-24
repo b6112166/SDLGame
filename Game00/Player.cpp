@@ -2,8 +2,11 @@
 
 
 
-Player::Player():MovingEntity(100,100,1,3){
-	
+Player::Player(int x,int y,SDL_Texture * texture)
+	:MovingEntity(x,y,1,3),
+	playerTexture(texture)
+{
+	playerRect = { x,y,20,20 };
 	jumpEnabled = false;
 
 
@@ -62,4 +65,13 @@ void Player::update()
 		jumpEnabled = true;//jump reset
 	}
 	
+
+	playerRect.x = x;
+	playerRect.y = y;
+
+}
+
+void Player::render(SDL_Renderer* renderer) 
+{
+	SDL_RenderCopy(renderer, playerTexture, NULL, &playerRect);//player render
 }

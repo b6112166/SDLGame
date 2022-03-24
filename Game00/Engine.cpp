@@ -57,22 +57,22 @@ void Engine::init(const char* title, int xpos, int ypos, int width, int height, 
 			//texture loader code
 			IMG_Init(IMG_INIT_PNG);
 			
-			playerTexture = textureLoader("assets/ball.png");
+
 		
 
-			playerRect.h = 20;
-			playerRect.w = 20;
-
 			
 			
 			
 			
 
 
-			mainPlayer = new Player();
+			mainPlayer = new Player(100,100,loadTexture("assets/ball.png"));//need to provide texture
 
-			Camera mainCamera = { mainPlayer->getPosX() - width / 2 , mainPlayer->getPosY() - width / 2, width,height};
+			//Camera mainCamera = { mainPlayer->getPosX() - width / 2 , mainPlayer->getPosY() - width / 2, width,height};
 
+			
+			map = new Map(1, loadTexture("assets/tileset/Wasteland-Files.png"));
+			
 		}
 	}
 }
@@ -135,8 +135,7 @@ void Engine::update()
 {
 	mainPlayer->update();
 
-	playerRect.x = mainPlayer->getPosX();
-	playerRect.y = mainPlayer->getPosY();
+	
 }
 
 void Engine::render()
@@ -148,8 +147,10 @@ void Engine::render()
 	SDL_RenderClear(renderer);
 
 	
-	SDL_SetRenderDrawColor(renderer, 255, 2555, 255, 255);
-	SDL_RenderCopy(renderer, playerTexture, NULL, &playerRect);//player render
+	SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
+	//map render
+	
+	mainPlayer->render(renderer);
 
 	//draw
 	SDL_RenderPresent(renderer);
@@ -165,10 +166,12 @@ void Engine::clean()
 }
 
 
-SDL_Texture* Engine::textureLoader(string filename) {
+
+
+SDL_Texture* Engine::loadTexture(string filename) {
 	SDL_Surface* tempSurface = IMG_Load(filename.c_str());
 
-	SDL_Texture *resultText = SDL_CreateTextureFromSurface(renderer, tempSurface);
+	SDL_Texture* resultText = SDL_CreateTextureFromSurface(renderer, tempSurface);
 
 
 	SDL_FreeSurface(tempSurface);
