@@ -6,7 +6,7 @@ class Player : public MovingEntity
 public:
 	Player(int x, int y, SDL_Texture* playerTexture);
 
-	int getHp();
+	int getHp() { return HP; };
 	
 	void shoot();
 	

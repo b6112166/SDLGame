@@ -28,7 +28,7 @@ Map::~Map() {
 }
 
 void Map::LoadMap(const char* f) {
-	//load tileset
+	
 
 	
 	//init
@@ -81,4 +81,8 @@ int Map::getTile(int row, int col) {
 
 void Map::render(SDL_Renderer * renderer) {
 	//todo render the map
+	
+	//test render
+	SDL_RenderCopy(renderer, tileSet, NULL, NULL);
+
 }

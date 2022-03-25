@@ -37,13 +37,13 @@ public:
 
 protected:
 
-    Player * mainPlayer;
+	class Player* mainPlayer;
 	bool isRunning;
 	SDL_Window* gameWindow;
 	SDL_Renderer* renderer;
 	
 
-	Map * map;
+	class Map * map;
 
 private:
 

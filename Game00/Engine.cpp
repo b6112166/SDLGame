@@ -149,7 +149,9 @@ void Engine::render()
 	
 	SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
 	//map render
-	
+	map->render(renderer);
+
+	//player render
 	mainPlayer->render(renderer);
 
 	//draw

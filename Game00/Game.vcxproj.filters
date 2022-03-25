@@ -24,7 +24,6 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Engine.h" />
     <ClInclude Include="direction.h">
       <Filter>Source Files</Filter>
     </ClInclude>
@@ -41,6 +40,9 @@
       <Filter>Source Files\Entities</Filter>
     </ClInclude>
     <ClInclude Include="Map.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine.h">
       <Filter>Source Files</Filter>
     </ClInclude>
   </ItemGroup>
