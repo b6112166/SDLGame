@@ -24,6 +24,6 @@ protected:
 
 	SDL_Texture* tileSet;
 
-	const int TILEW = 24;
-	const int TILEH = 24;
+	const int TILEW = 16;
+	const int TILEH = 16;
 };
