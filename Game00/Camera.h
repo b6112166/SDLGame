@@ -1,30 +1,38 @@
 #pragma once
-
+#include "Game.h"
+using namespace std;
 class Camera {
-
-
-public:
-	Camera(int x, int y, int w, int h) {
-		this->w = w;
-		this->h = h;
-		this->x = x;
-		this->y = y;
-
-	}
-	~Camera() {};
-
-	int getW() {return w};
-
-	int getH() {return h};
-
-	int getX() {return x};
-
-	int getY() {return y};
-
-protected:
+private:
 	int x;
 	int y;
 	int w;
 	int h;
-};
+	int scale;//how much to scale all the entities by
+	class Entity * target;
+public:
+	Camera(Entity * target,int scale,int windowWidth,int windowHeight);
 
+
+	void update();//keeps the target centered when given x and y
+	
+	int getX() {
+		return x;
+	}
+
+	int getY() {
+		return y;
+	}
+
+	int getW() {
+		return w;
+	}
+
+	int getH() {
+		return h;
+	}
+	int getScale() {
+		return scale;
+	}
+
+
+};

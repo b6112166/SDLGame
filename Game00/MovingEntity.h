@@ -5,7 +5,7 @@
 
 class MovingEntity : public Entity {
 public:
-	MovingEntity(int x,int y,int type,int ms):Entity(x,y,type) {
+	MovingEntity(int x,int y,int w, int h,int type,int ms):Entity(x,y,w,h,type) {
 		movementSpeed = ms;
 		isMoving = false;
 		faceDirection = direction::d_right;

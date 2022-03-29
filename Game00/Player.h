@@ -15,12 +15,13 @@ public:
 	void destroy();
 	void walk(direction);
 	void update() override;
+	void handleControl(const Uint8 * state);
 
 	void stop();
 
 	void jump();
 	
-	void render(SDL_Renderer* renderer); 
+	void render(SDL_Renderer* renderer,class Camera * camera); 
 	
 	direction getCurrentDirection() { return faceDirection; };
 

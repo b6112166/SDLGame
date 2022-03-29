@@ -1,13 +1,13 @@
 #include "SDL/SDL.h"
 #include <iostream>
-#include "Engine.h"
+#include "Game.h"
 using namespace std;
 //variables for capped 60fps
 const int MAXFPS = 60;
 const int FRAMEDELAY = 1000 / MAXFPS;
 
-const int WIDTH = 800;
-const int HEIGHT = 600;
+const int WIDTH = 1280;
+const int HEIGHT = 720;
 
 int main(int argc, char* args[])
 {
@@ -15,8 +15,8 @@ int main(int argc, char* args[])
 	Uint32 frameStart;
 	int frameTime;
 
-	Engine* myGame = nullptr;
-	myGame = new Engine();
+	Game* myGame = nullptr;
+	myGame = new Game();
 
 	myGame->init("Game", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, WIDTH, HEIGHT, false);
 
@@ -30,8 +30,8 @@ int main(int argc, char* args[])
 		myGame->handleEvents();
 		myGame->update();
 		myGame->render();
+	
 		frameTime = SDL_GetTicks() - frameStart;
-		
 		if (FRAMEDELAY > frameTime)
 		{
 			SDL_Delay(FRAMEDELAY - frameTime);

@@ -1,16 +1,20 @@
 #pragma once
 
 #include "direction.h"
-#include "Engine.h"
+#include "Game.h"
 //interface class
 class Entity
 {
 
 public:
-	Entity(int x_input, int y_input, int type_input) {
-		x = x_input; 
-		y = y_input; 
-		type = type_input; 
+	Entity(int x, int y,int w,int h,int type):
+	x(x),
+	y(y),
+	width(w),
+	height(h),
+	type(type)
+	{
+		
 		
 	};
 
@@ -18,6 +22,8 @@ public:
 
 	int getPosX() { return x; };
 	int getPosY() { return y; };
+	int getWidth() { return width; };
+	int getHeight() { return height; };
 	virtual void update() {};
 
 
@@ -26,7 +32,8 @@ protected:
 	//bool visible;
 	int x ;
 	int y ;
-	
+	int width;
+	int height;
 	
 
 private:

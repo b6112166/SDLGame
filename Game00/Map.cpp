@@ -79,17 +79,23 @@ int Map::getTile(int row, int col) {
 	return tiles[row][col];
 }
 
-void Map::render(SDL_Renderer * renderer) {
+void Map::render(SDL_Renderer * renderer,Camera * camera) {
 	//todo render the map
 	
 
 
 	SDL_Rect srcRect;//rect from tileset, to select tiles from
 	SDL_Rect destRect;//rect to render onto the screen, tile position on map.
+	int scale = camera->getScale();
 	srcRect.w = TILEW;
 	srcRect.h = TILEH;
-	destRect.w = TILEH;
-	destRect.h = TILEH;
+	destRect.w = TILEH * scale;
+	destRect.h = TILEH * scale;
+	int cameraX = camera->getX();//reusability
+	int cameraY = camera->getY();
+
+	int onScreenW = TILEW * scale;//actual width on screen
+	int onScreenH = TILEH * scale;//actual height on screen
 	//i = y cord
 	//j = x cord
 	for (int i = 0; i < 25; i++) {
@@ -98,23 +104,30 @@ void Map::render(SDL_Renderer * renderer) {
 			//find x,y on the tileset based on width and height
 			if (tiles[i][j] != 0) {
 				int tileID = tiles[i][j]; //id starts at 1
+				
+				
 
-				destRect.x = TILEW * j;
-				destRect.y = TILEH * i;
+				int targetX = onScreenW* j; //recalculated x coord after scaling 
+				int targetY = onScreenH * i;//recalculated y coord after scaling
+				if (targetX + onScreenW > cameraX && targetY + onScreenH > cameraY) {//only render if the tile is inside the screen
 
+					destRect.x = (targetX - cameraX);
+					destRect.y = (targetY - cameraY); 
+					
 
-				srcRect.x = TILEW * ((tileID - 1) % 32);		// to calculate x , x = tile width * (id-1 % size per row for tileset (32) )  
-				srcRect.y = TILEH * ((tileID - 1) / 32);		//to calculate y, y = tile height * floor (id-1/ size per row tileset (32) )
+					srcRect.x = TILEW * ((tileID - 1) % 32);		// to calculate x , x = tile width * (id-1 % size per row for tileset (32) )  
+					srcRect.y = TILEH * ((tileID - 1) / 32);		//to calculate y, y = tile height * floor (id-1/ size per row tileset (32) )
+					
+					SDL_RenderCopy(renderer, tileSet, &srcRect, &destRect);
+				}
+				
 
 			}
-			SDL_RenderCopy(renderer, tileSet,&srcRect,&destRect);
+			
 		}
 	}
 
-	//test render
-	/*
-		SDL_RenderCopy(renderer, tileSet, NULL, NULL);
-	*/
+
 
 
 }
