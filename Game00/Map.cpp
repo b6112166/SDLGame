@@ -5,17 +5,24 @@ Map::Map(int mapNumber,SDL_Texture * tileSet)
 {
 
 	
-	//set tile set
 	
-	//render tiles
-	tiles = new int* [25];
-	for (int i = 0; i < 25; i++) 
-	{
-		tiles[i] = new int[25];
-	}
-	string filename = "assets/maps/map" + to_string(mapNumber) + ".txt";
-	LoadMap(filename.c_str());
+	
 
+	
+	string f = "assets/maps/testmap.txt";
+	//load render tiles
+
+	tiles = LoadTiles(f.c_str(), 25, 25);
+	for (int i = 0; i < 25; i++) {
+		for (int j = 0; j < 25; j++) {
+			cout << tiles[i][j] << ",";
+		}
+		cout << endl;
+	}
+
+	//load collision tiles
+	f = "assets/maps/testmapcol.txt";
+	collisionTiles = LoadTiles(f.c_str(), 25, 25);
 }
 
 Map::~Map() {
@@ -25,21 +32,34 @@ Map::~Map() {
 	}
 
 	delete[] tiles;
+	for (int i = 0; i < 25; i++)
+	{
+		delete[] collisionTiles[i];
+	}
+
+	delete[] collisionTiles;
 }
 
-void Map::LoadMap(const char* f) {
+int** Map::LoadTiles(const char* f,int col,int row) {
 	
+	//returns a 2d int array used for tiles
+	
+	int** result = new int* [25];
 
+	for (int i = 0; i < 25; i++)
+	{
+		result[i] = new int[25];
+	}
 	
 	//init
 	for (int i = 0; i < 25; i++)
 	{
 		for (int j = 0; j < 25; j++) {
-			tiles[i][j] = 0;
+			result[i][j] = 0;
 		}
 	}
 
-	//todo: add loading from file
+	//loading from file
 	ifstream file;
 	string line;
 	file.open(f);
@@ -53,22 +73,17 @@ void Map::LoadMap(const char* f) {
 			//parses each number using the delimiter ","
 			int delimiterPos = line.find(",");
 			string numberStr = line.substr(0, delimiterPos);
-
-			tiles[i][j] = atoi(numberStr.c_str());
-			cout << "loaded " << tiles[i][j]<<endl;
+			
+			result[i][j] = atoi(numberStr.c_str());
+		
 			line.erase(0, delimiterPos + 1); //also removes the delimiter
 		}
 		i++;
 	}
 
-	cout << endl << "memory inside the map after loading"<<endl;
+	
 
-	for (int i = 0; i < 25; i++) {
-		for (int j = 0; j < 25; j++) {
-			cout << tiles[i][j] << ",";
-		}
-		cout << endl;
-	}
+	return result;
 
 
 
@@ -86,7 +101,7 @@ void Map::render(SDL_Renderer * renderer,Camera * camera) {
 
 	SDL_Rect srcRect;//rect from tileset, to select tiles from
 	SDL_Rect destRect;//rect to render onto the screen, tile position on map.
-	int scale = camera->getScale();
+	int scale = 4 ;
 	srcRect.w = TILEW;
 	srcRect.h = TILEH;
 	destRect.w = TILEH * scale;

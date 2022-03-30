@@ -69,7 +69,7 @@ void Game::init(const char* title, int xpos, int ypos, int width, int height, bo
 			mainPlayer = new Player(100,100,loadTexture("assets/ball.png"));//need to provide texture
 			
 			//Camera mainCamera = { mainPlayer->getPosX() - width / 2 , mainPlayer->getPosY() - width / 2, width,height};
-			mainCamera = new Camera(mainPlayer,4,width,height);
+			mainCamera = new Camera(mainPlayer,width,height);
 			
 			map = new Map(1, loadTexture("assets/tileset/Wasteland-Files.png"));
 			

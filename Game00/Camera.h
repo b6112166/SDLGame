@@ -7,11 +7,11 @@ private:
 	int y;
 	int w;
 	int h;
-	int scale;//how much to scale all the entities by
-	class Entity * target;
+	
+	class Entity * target;//target that the camera should focus on
 public:
-	Camera(Entity * target,int scale,int windowWidth,int windowHeight);
-
+	Camera(Entity * target,int windowWidth,int windowHeight);
+	~Camera();
 
 	void update();//keeps the target centered when given x and y
 	
@@ -30,9 +30,7 @@ public:
 	int getH() {
 		return h;
 	}
-	int getScale() {
-		return scale;
-	}
+
 
 
 };

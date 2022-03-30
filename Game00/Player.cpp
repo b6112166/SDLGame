@@ -24,11 +24,11 @@ void Player::update()
 		switch (faceDirection) {
 			//move left
 			case direction::d_left:
-					x -= movementSpeed;
+					x -= movementSpeed * scale;
 					break;
 				//move right
 			case direction::d_right:
-					x += movementSpeed;
+					x += movementSpeed * scale;
 					break;
 		}
 
@@ -37,8 +37,8 @@ void Player::update()
 	//gravity update
 	 //temp code, to be replaced with proper collision code
 	y += yVelocity;
-	if (y <= 400) {
-		yVelocity += gravity*gravity;
+	if (y <= 1*scale) {
+		yVelocity += gravity*gravity*scale;
 		
 	}
 	else {
@@ -53,11 +53,11 @@ void Player::update()
 
 void Player::render(SDL_Renderer* renderer, Camera* camera)
 {
-	int scale = camera->getScale();
-	playerRect.x = (x - camera->getX()) * scale;
-	playerRect.y = (y - camera->getY()) * scale;
+
+	playerRect.x = (x - camera->getX()) ;
+	playerRect.y = (y - camera->getY()) ;
 	playerRect.w = width * scale;
-	playerRect.h = height * scale;
+	playerRect.h = height *scale ;
 	
 	SDL_RenderCopy(renderer, playerTexture, NULL, &playerRect);//player render
 
@@ -92,7 +92,7 @@ void Player::handleControl(const Uint8* state) {
 		//jump
 		if (jumpEnabled) //temp code, to be replaced with proper collision code
 		{
-			yVelocity = -10;
+			yVelocity = -10 * scale;
 			jumpEnabled = false;
 		}
 	}

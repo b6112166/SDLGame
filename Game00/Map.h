@@ -20,7 +20,7 @@ protected:
 	int** collisionTiles;
 
 
-	void LoadMap(const char* filename);
+	int** LoadTiles(const char*,int,int);
 
 	SDL_Texture* tileSet;
 
