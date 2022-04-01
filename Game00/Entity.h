@@ -26,7 +26,7 @@ public:
 	int getHeight() { return height; };
 	virtual void update() {};
 
-
+	
 protected:
 	int type;
 	//bool visible;

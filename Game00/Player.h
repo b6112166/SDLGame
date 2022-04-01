@@ -35,7 +35,7 @@ private:
 	int bomb_count =3;
 	int blast_radius =50;
 	int attack_damage = 10;
-	int scale = 4;
+
 	SDL_Rect playerRect;
 
 	SDL_Texture* playerTexture;

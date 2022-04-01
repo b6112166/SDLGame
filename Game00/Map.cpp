@@ -7,18 +7,14 @@ Map::Map(int mapNumber,SDL_Texture * tileSet)
 	
 	
 	
-
 	
-	string f = "assets/maps/testmap.txt";
+	
+	string f = "assets/maps/map1.txt";
+	cout << "loading" << f<<endl; 
 	//load render tiles
 
 	tiles = LoadTiles(f.c_str(), 25, 25);
-	for (int i = 0; i < 25; i++) {
-		for (int j = 0; j < 25; j++) {
-			cout << tiles[i][j] << ",";
-		}
-		cout << endl;
-	}
+	
 
 	//load collision tiles
 	f = "assets/maps/testmapcol.txt";
@@ -63,6 +59,9 @@ int** Map::LoadTiles(const char* f,int col,int row) {
 	ifstream file;
 	string line;
 	file.open(f);
+	if (!file) {
+		cout << "file reading failed for "<<f<<endl;
+	}
 
 	int i = 0;
 	while (getline(file, line)) {
@@ -90,6 +89,9 @@ int** Map::LoadTiles(const char* f,int col,int row) {
 	
 }
 
+
+
+
 int Map::getTile(int row, int col) {
 	return tiles[row][col];
 }
@@ -98,7 +100,7 @@ void Map::render(SDL_Renderer * renderer,Camera * camera) {
 	//todo render the map
 	
 
-
+	
 	SDL_Rect srcRect;//rect from tileset, to select tiles from
 	SDL_Rect destRect;//rect to render onto the screen, tile position on map.
 	int scale = 4 ;

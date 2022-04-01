@@ -3,7 +3,7 @@
 
 
 Player::Player(int x,int y,SDL_Texture * texture)
-	:MovingEntity(x,y,16,16,1,3),
+	:MovingEntity(x,y,64,64,1,16),
 	playerTexture(texture)
 {
 	playerRect = { x,y,width,height };
@@ -17,6 +17,7 @@ Player::Player(int x,int y,SDL_Texture * texture)
 
 void Player::update()
 {
+
 	//movement update
 	if (isMoving)
 	{
@@ -24,29 +25,32 @@ void Player::update()
 		switch (faceDirection) {
 			//move left
 			case direction::d_left:
-					x -= movementSpeed * scale;
+					x -= movementSpeed ;
 					break;
 				//move right
 			case direction::d_right:
-					x += movementSpeed * scale;
+					x += movementSpeed ;
 					break;
 		}
 
 	}
+	//check collision
+
 
 	//gravity update
 	 //temp code, to be replaced with proper collision code
 	y += yVelocity;
-	if (y <= 1*scale) {
-		yVelocity += gravity*gravity*scale;
+	if (y <= 700) {
+		yVelocity += gravity;
 		
 	}
 	else {
 		yVelocity = 0;//stop
 		jumpEnabled = true;//jump reset
 	}
-	
-	cout << "x:" << x << "y:" << y<<endl;
+	//check collision
+
+
 	
 
 }
@@ -56,8 +60,8 @@ void Player::render(SDL_Renderer* renderer, Camera* camera)
 
 	playerRect.x = (x - camera->getX()) ;
 	playerRect.y = (y - camera->getY()) ;
-	playerRect.w = width * scale;
-	playerRect.h = height *scale ;
+	playerRect.w = width ;
+	playerRect.h = height ;
 	
 	SDL_RenderCopy(renderer, playerTexture, NULL, &playerRect);//player render
 
@@ -92,7 +96,7 @@ void Player::handleControl(const Uint8* state) {
 		//jump
 		if (jumpEnabled) //temp code, to be replaced with proper collision code
 		{
-			yVelocity = -10 * scale;
+			yVelocity = -50 ;
 			jumpEnabled = false;
 		}
 	}

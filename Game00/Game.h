@@ -34,6 +34,8 @@ public:
 	void render();
 	void clean();
 	void handleCollision();
+	
+
 
 	bool running();
 

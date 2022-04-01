@@ -9,7 +9,7 @@ public:
 		movementSpeed = ms;
 		isMoving = false;
 		faceDirection = direction::d_right;
-		gravity = 1;
+		gravity = 2;
 		xVelocity = 0;
 		yVelocity = 0;
 

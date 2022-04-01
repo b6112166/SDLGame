@@ -109,6 +109,7 @@ void Game::handleEvents()
 
 void Game::update()
 {
+
 	mainPlayer->update();
 	mainCamera->update();
 	
