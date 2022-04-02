@@ -18,6 +18,8 @@ Player::Player(int x,int y,SDL_Texture * texture)
 void Player::update()
 {
 
+	lastX = x;
+	lastY = y;
 	//movement update
 	if (isMoving)
 	{
@@ -25,29 +27,27 @@ void Player::update()
 		switch (faceDirection) {
 			//move left
 			case direction::d_left:
-					x -= movementSpeed ;
-					break;
+				x -= movementSpeed ;
+				break;
 				//move right
 			case direction::d_right:
-					x += movementSpeed ;
-					break;
+				x += movementSpeed ;
+				break;
+			case direction::d_down:
+				y += movementSpeed;
+				break;
+			case direction::d_up:
+				y -= movementSpeed;
 		}
 
 	}
 	//check collision
 
+	cout << "y:" << y << endl;
 
 	//gravity update
 	 //temp code, to be replaced with proper collision code
-	y += yVelocity;
-	if (y <= 700) {
-		yVelocity += gravity;
-		
-	}
-	else {
-		yVelocity = 0;//stop
-		jumpEnabled = true;//jump reset
-	}
+	
 	//check collision
 
 
@@ -69,9 +69,11 @@ void Player::render(SDL_Renderer* renderer, Camera* camera)
 }
 
 void Player::handleControl(const Uint8* state) {
-	if ((!state[SDL_SCANCODE_A] && !state[SDL_SCANCODE_D]) || (state[SDL_SCANCODE_A] && state[SDL_SCANCODE_D]))//not moving
+	if (!state[SDL_SCANCODE_A] && !state[SDL_SCANCODE_D] && !state[SDL_SCANCODE_W] && !state[SDL_SCANCODE_S]) //if none of the buttons are held 
 	{
+		
 		isMoving = false;
+		
 	}
 	else
 	{
@@ -87,17 +89,36 @@ void Player::handleControl(const Uint8* state) {
 			faceDirection = direction::d_right;
 			isMoving = true;
 		}
+		else if(state[SDL_SCANCODE_W])
+		{
+			faceDirection = direction::d_up;
+			isMoving = true;
+
+		}
+		else if(state[SDL_SCANCODE_S]) {
+			faceDirection = direction::d_down;
+			isMoving = true;
+
+		}
 		//right
 
 
 	}
 	if (state[SDL_SCANCODE_SPACE])
 	{
-		//jump
-		if (jumpEnabled) //temp code, to be replaced with proper collision code
-		{
-			yVelocity = -50 ;
-			jumpEnabled = false;
-		}
+	
 	}
+}
+
+
+void Player::handleCollision() {
+	
+		
+		if (faceDirection == direction::d_down || faceDirection == direction::d_up) { // if moving vertical
+			y = lastY; //revert y
+		}
+		else if (faceDirection == direction::d_left || faceDirection == direction::d_right) {// if moving horizontal
+			x = lastX;//revert last x
+		}
+	
 }

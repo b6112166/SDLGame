@@ -110,7 +110,9 @@ void Game::handleEvents()
 void Game::update()
 {
 
+
 	mainPlayer->update();
+	checkCollision();
 	mainCamera->update();
 	
 }
@@ -159,13 +161,38 @@ SDL_Texture* Game::loadTexture(string filename) {
 	return resultText;
 }
 
-void Game::handleCollision()
+void Game::checkCollision()
 {
+	int playerX = mainPlayer->getPosX();
+	int playerY = mainPlayer->getPosY();
+	int playerW = mainPlayer->getWidth();
+	int playerH = mainPlayer->getHeight();
+
+
+	int tileH = map->getScaledTileH();
+	int tileW = map->getScaledTileW();
+
 	for (int i = 0; i < 25; i++) {
 		for (int j = 0; j < 25; j++) {
-			/*if (Map.getCollisionBox(i, j) == 1)
-				checkCollision(i,Map->TILEW,j,Map->TILEH,mainPlayer->x,mainPlayer->y,mainPlayer->w,mainPlayer->h)
-			*/
+			if (map->getCollisionTile(i,j) == 1) {//check for collision if tile has collision enabled
+				if (overlap(playerX, playerY, playerW, playerH, map->getTileX(j), map->getTileY(i), tileW, tileH)) {
+					mainPlayer->handleCollision();
+				}
+			}
 		}
 	}
+}
+
+
+bool Game::overlap(int x1,int y1,int w1,int h1, int x2,int y2,int w2,int h2) {
+	if (x1 + w1 >= x2 && //left check
+		x2 + w2 >= x1 && //right check
+		y1 + h1 >= y2 && //up check
+		y2 + h2 >= y1 //down check
+		) {
+
+		return true;
+	}
+
+	return false;
 }

@@ -14,8 +14,14 @@ public:
 	
 
 	void render(SDL_Renderer* renderer,class Camera * camera);
-	int getTile(int row, int col);
+	int getCollisionTile(int row, int col);
+
+	int getScaledTileW() { return scaledW; };
+	int getScaledTileH() { return scaledH; };
 	
+	int getTileX(int col ) { return scaledW * col; };
+	int getTileY(int row) { return scaledH * row;  };
+
 protected:
 	int** tiles;
 
@@ -27,7 +33,12 @@ protected:
 
 	SDL_Texture* tileSet;
 
+	
 
 	const int TILEW = 16;
 	const int TILEH = 16;
+
+	const int scaledW = TILEW * 4;
+
+	const int scaledH = TILEH * 4;
 };

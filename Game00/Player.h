@@ -21,6 +21,8 @@ public:
 
 	void jump();
 	
+	void handleCollision();
+
 	void render(SDL_Renderer* renderer,class Camera * camera); 
 	
 	direction getCurrentDirection() { return faceDirection; };
@@ -35,6 +37,10 @@ private:
 	int bomb_count =3;
 	int blast_radius =50;
 	int attack_damage = 10;
+
+	int lastX;
+	int lastY;
+
 
 	SDL_Rect playerRect;
 

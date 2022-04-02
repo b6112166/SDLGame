@@ -9,7 +9,7 @@ Map::Map(int mapNumber,SDL_Texture * tileSet)
 	
 	
 	
-	string f = "assets/maps/map1.txt";
+	string f = "assets/maps/testmap2.txt";
 	cout << "loading" << f<<endl; 
 	//load render tiles
 
@@ -17,8 +17,15 @@ Map::Map(int mapNumber,SDL_Texture * tileSet)
 	
 
 	//load collision tiles
-	f = "assets/maps/testmapcol.txt";
+	f = "assets/maps/testmap2collision.txt";
 	collisionTiles = LoadTiles(f.c_str(), 25, 25);
+
+	for (int i = 0; i < 25; i++) {
+		for (int j = 0; j < 25; j++) {
+			cout << collisionTiles[i][j]<<',';
+		}
+		cout << endl;
+	}
 }
 
 Map::~Map() {
@@ -91,10 +98,10 @@ int** Map::LoadTiles(const char* f,int col,int row) {
 
 
 
-
-int Map::getTile(int row, int col) {
-	return tiles[row][col];
+int Map::getCollisionTile(int row, int col) {
+	return collisionTiles[row][col];
 }
+
 
 void Map::render(SDL_Renderer * renderer,Camera * camera) {
 	//todo render the map
@@ -103,16 +110,15 @@ void Map::render(SDL_Renderer * renderer,Camera * camera) {
 	
 	SDL_Rect srcRect;//rect from tileset, to select tiles from
 	SDL_Rect destRect;//rect to render onto the screen, tile position on map.
-	int scale = 4 ;
+
 	srcRect.w = TILEW;
 	srcRect.h = TILEH;
-	destRect.w = TILEH * scale;
-	destRect.h = TILEH * scale;
+	destRect.w = scaledW;
+	destRect.h = scaledH;
 	int cameraX = camera->getX();//reusability
 	int cameraY = camera->getY();
 
-	int onScreenW = TILEW * scale;//actual width on screen
-	int onScreenH = TILEH * scale;//actual height on screen
+	
 	//i = y cord
 	//j = x cord
 	for (int i = 0; i < 25; i++) {
@@ -124,9 +130,9 @@ void Map::render(SDL_Renderer * renderer,Camera * camera) {
 				
 				
 
-				int targetX = onScreenW* j; //recalculated x coord after scaling 
-				int targetY = onScreenH * i;//recalculated y coord after scaling
-				if (targetX + onScreenW > cameraX && targetY + onScreenH > cameraY) {//only render if the tile is inside the screen
+				int targetX = scaledW * j; //recalculated x coord after scaling 
+				int targetY = scaledH * i;//recalculated y coord after scaling
+				if (targetX + scaledW > cameraX && targetY + scaledH > cameraY) {//only render if the tile is inside the screen
 
 					destRect.x = (targetX - cameraX);
 					destRect.y = (targetY - cameraY); 

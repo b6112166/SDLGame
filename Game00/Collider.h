@@ -12,6 +12,7 @@ public:
 	{}
 	~Collider() {}
 
+	void Update();
 
 private:
 	int x;
