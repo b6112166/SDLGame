@@ -1,4 +1,9 @@
-﻿  Player.cpp
+﻿  Game.cpp
+  Main.cpp
+  Map.cpp
+  Player.cpp
+  Sword.cpp
+  Generating Code...
   Game.vcxproj -> H:\school\cmpt-1267\Final project\SDLGame\Game00\Debug\Game.exe
   H:\school\cmpt-1267\Final project\SDLGame\Game00\\..\external\SDL\lib\win\x86\libfreetype-6.dll
   H:\school\cmpt-1267\Final project\SDLGame\Game00\\..\external\SDL\lib\win\x86\libogg-0.dll

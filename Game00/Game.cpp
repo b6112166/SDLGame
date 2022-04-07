@@ -48,30 +48,50 @@ void Game::init(const char* title, int xpos, int ypos, int width, int height, bo
 			}
 			else 
 			{
+
 				cout << "renderer initialized!";
+				//texture loader code
+				IMG_Init(IMG_INIT_PNG);
+
+
+
+
+
+
+
+
+				enemyTexture = loadTexture("assets/enemy.png");
+
+				mainPlayer = new Player(100, 100, loadTexture("assets/mainCharacter.png"));//need to provide texture
+
+				//Camera mainCamera = { mainPlayer->getPosX() - width / 2 , mainPlayer->getPosY() - width / 2, width,height};
+				mainCamera = new Camera(mainPlayer, width, height);
+
+				map = new Map(1, loadTexture("assets/tileset/Dungeon_tileset.png"));
+
+				//spawn enemy from spawn point
+
+				for (int i = 0; i < 100; i++) {
+					for (int j = 0; j < 100; j++) {
+
+						//check if enemy spawn
+						if (map->getSpwanTile(i, j) == 1) {
+							enemyList.emplace_back(map->getTileX(i), map->getTileY(j), enemyTexture);
+						}
+
+					}
+				}
+
 				isRunning = true;
 			}
 
 			
 
-			//texture loader code
-			IMG_Init(IMG_INIT_PNG);
 			
 
-		
 
 			
-			
-			
-			
-			
 
-			mainPlayer = new Player(100,100,loadTexture("assets/ball.png"));//need to provide texture
-			
-			//Camera mainCamera = { mainPlayer->getPosX() - width / 2 , mainPlayer->getPosY() - width / 2, width,height};
-			mainCamera = new Camera(mainPlayer,width,height);
-			
-			map = new Map(1, loadTexture("assets/tileset/Wasteland-Files.png"));
 			
 		}
 	}
@@ -111,10 +131,23 @@ void Game::update()
 {
 
 
+
 	mainPlayer->update();
+	
+
+	for (Enemy e : enemyList) {
+		e.update();
+	}
+
 	checkCollision();
 	mainCamera->update();
 	
+	//check if player is dead, if true close the game
+	if (mainPlayer->isDead()) {
+		isRunning = false;
+	}
+
+
 }
 
 void Game::render()
@@ -126,12 +159,20 @@ void Game::render()
 	SDL_RenderClear(renderer);
 
 	
-	SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
+
+	SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
 	//map render
 	map->render(renderer,mainCamera);
 
+	//render enemy
+
+	for (Enemy e : enemyList) {
+		e.render(renderer,mainCamera);
+	}
+
 	//player render
 	mainPlayer->render(renderer,mainCamera);
+
 
 	
 	//draw
@@ -141,8 +182,14 @@ void Game::render()
 
 void Game::clean()
 {
+	delete map;
+	delete mainPlayer;
+	
+	SDL_DestroyTexture(enemyTexture);
 	SDL_DestroyWindow(gameWindow);
 	SDL_DestroyRenderer(renderer);
+	
+
 	SDL_Quit();
 	cout << "Game exited,cya!"<<endl;
 }
@@ -172,15 +219,22 @@ void Game::checkCollision()
 	int tileH = map->getScaledTileH();
 	int tileW = map->getScaledTileW();
 
-	for (int i = 0; i < 25; i++) {
-		for (int j = 0; j < 25; j++) {
+	for (int i = 0; i < 100; i++) {
+		for (int j = 0; j < 100; j++) {
 			if (map->getCollisionTile(i,j) == 1) {//check for collision if tile has collision enabled
-				if (overlap(playerX, playerY, playerW, playerH, map->getTileX(j), map->getTileY(i), tileW, tileH)) {
-					mainPlayer->handleCollision();
+				if (overlap(playerX, playerY, playerW, playerH, map->getTileX(i), map->getTileY(j), tileW, tileH)) {
+					mainPlayer->handleCollision(1);
 				}
 			}
 		}
 	}
+
+	for (Enemy e : enemyList) {
+		if (overlap(playerX, playerY, playerW, playerH, e.getPosX(), e.getPosY(), e.getWidth(), e.getHeight())) {
+			mainPlayer->handleCollision(2);
+		}
+	}
+
 }
 
 

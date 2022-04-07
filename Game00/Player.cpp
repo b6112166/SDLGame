@@ -1,49 +1,22 @@
+#pragma once
 #include "Player.h"
 
 
 
-Player::Player(int x,int y,SDL_Texture * texture)
-	:MovingEntity(x,y,64,64,1,16),
-	playerTexture(texture)
-{
-	playerRect = { x,y,width,height };
-	jumpEnabled = false;
-
-
-}
 
 
 
 
-void Player::update()
+
+void Player::update() 
 {
 
 	lastX = x;
 	lastY = y;
 	//movement update
-	if (isMoving)
-	{
-		//direction check
-		switch (faceDirection) {
-			//move left
-			case direction::d_left:
-				x -= movementSpeed ;
-				break;
-				//move right
-			case direction::d_right:
-				x += movementSpeed ;
-				break;
-			case direction::d_down:
-				y += movementSpeed;
-				break;
-			case direction::d_up:
-				y -= movementSpeed;
-		}
+	move();
 
-	}
-	//check collision
 
-	cout << "y:" << y << endl;
 
 	//gravity update
 	 //temp code, to be replaced with proper collision code
@@ -111,14 +84,17 @@ void Player::handleControl(const Uint8* state) {
 }
 
 
-void Player::handleCollision() {
-	
-		
+void Player::handleCollision(int condition) {
+	//condition 1, player has hit the wall, condition 2, player has hit the enemy
+	if (condition == 1) {
 		if (faceDirection == direction::d_down || faceDirection == direction::d_up) { // if moving vertical
 			y = lastY; //revert y
 		}
 		else if (faceDirection == direction::d_left || faceDirection == direction::d_right) {// if moving horizontal
 			x = lastX;//revert last x
 		}
-	
+	}
+	else if (condition == 2) {
+		dead = true;
+	}
 }

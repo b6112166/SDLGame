@@ -8,6 +8,7 @@
 #include "Map.h"
 #include <vector>
 #include "Camera.h"
+#include "Enemy.h"
 using namespace std;
 /*
 struct Camera {
@@ -56,6 +57,7 @@ private:
 	SDL_Texture* loadTexture(string filename);
 	class Camera * mainCamera;
 	//entity list
-	//vector<Entity> entityList; //does not include the player
+	vector<Enemy > enemyList; //does not include the player
+	SDL_Texture* enemyTexture;
 };
 

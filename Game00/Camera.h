@@ -1,5 +1,6 @@
 #pragma once
-#include "Game.h"
+#include "Entity.h"
+
 using namespace std;
 class Camera {
 private:
@@ -11,7 +12,7 @@ private:
 	class Entity * target;//target that the camera should focus on
 public:
 	Camera(Entity * target,int windowWidth,int windowHeight);
-	~Camera();
+	~Camera() {};
 
 	void update();//keeps the target centered when given x and y
 	

@@ -1,46 +1,47 @@
 #pragma once
 #include "MovingEntity.h"
 
-class Player : public MovingEntity
-{
+class Player : public MovingEntity{
 public:
-	Player(int x, int y, SDL_Texture* playerTexture);
+	Player(int x, int y, SDL_Texture* playerTexture) :
+		MovingEntity(x, y, 48, 48, 16),
+		playerTexture(playerTexture) {
+		playerRect = { x,y,width,height };
+		dead = false;
+		lastX = x;
+		lastY = y;
 
-	int getHp() { return HP; };
+
+	};
+	~Player() { SDL_DestroyTexture(playerTexture); };
+
 	
-	void shoot();
 	
 	void itemAquire(int);
-	void damagedBy(int);
-	void destroy();
-	void walk(direction);
-	void update() override;
+
+	void update() ;
 	void handleControl(const Uint8 * state);
 
-	void stop();
 
-	void jump();
+
+	bool isDead() { return dead; };
 	
-	void handleCollision();
+	void handleCollision(int);
 
 	void render(SDL_Renderer* renderer,class Camera * camera); 
 	
-	direction getCurrentDirection() { return faceDirection; };
 
-	~Player() {};
+
 
 
 private:
-	bool jumpEnabled;
-	int HP = 100;
+
 	int movement_speed = 10;
-	int bomb_count =3;
-	int blast_radius =50;
-	int attack_damage = 10;
+
 
 	int lastX;
 	int lastY;
-
+	bool dead;
 
 	SDL_Rect playerRect;
 

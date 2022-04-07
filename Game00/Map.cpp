@@ -9,19 +9,23 @@ Map::Map(int mapNumber,SDL_Texture * tileSet)
 	
 	
 	
-	string f = "assets/maps/testmap2.txt";
+	string f = "assets/maps/dungeonmap1.txt";
 	cout << "loading" << f<<endl; 
 	//load render tiles
 
-	tiles = LoadTiles(f.c_str(), 25, 25);
+	tiles = LoadTiles(f.c_str(), 100, 100);
 	
 
 	//load collision tiles
-	f = "assets/maps/testmap2collision.txt";
-	collisionTiles = LoadTiles(f.c_str(), 25, 25);
+	f = "assets/maps/dungeonmap1collision.txt";
+	collisionTiles = LoadTiles(f.c_str(), 100, 100);
 
-	for (int i = 0; i < 25; i++) {
-		for (int j = 0; j < 25; j++) {
+	//load  spawn points
+	f = "assets/maps/dungeonmap1spawns.txt";
+	spawnPointTiles = LoadTiles(f.c_str(), 100, 100);
+
+	for (int i = 0; i < 100; i++) {
+		for (int j = 0; j < 100; j++) {
 			cout << collisionTiles[i][j]<<',';
 		}
 		cout << endl;
@@ -29,35 +33,42 @@ Map::Map(int mapNumber,SDL_Texture * tileSet)
 }
 
 Map::~Map() {
-	for (int i = 0; i < 25; i++) 
+	for (int i = 0; i < 100; i++) 
 	{
 		delete[] tiles[i];
 	}
 
 	delete[] tiles;
-	for (int i = 0; i < 25; i++)
+	for (int i = 0; i < 100; i++)
 	{
 		delete[] collisionTiles[i];
 	}
 
 	delete[] collisionTiles;
+
+	for (int i = 0; i < 100; i++)
+	{
+		delete[] spawnPointTiles[i];
+	}
+	delete[] spawnPointTiles;
+
 }
 
-int** Map::LoadTiles(const char* f,int col,int row) {
+int** Map::LoadTiles(const char* f,const int row,const int col) {
 	
-	//returns a 2d int array used for tiles
+	//returns a 2d int array used for tiles 
 	
-	int** result = new int* [25];
+	int** result = new int* [row];
 
-	for (int i = 0; i < 25; i++)
+	for (int i = 0; i < col; i++)
 	{
-		result[i] = new int[25];
+		result[i] = new int[col];
 	}
 	
 	//init
-	for (int i = 0; i < 25; i++)
+	for (int i = 0; i < row; i++)
 	{
-		for (int j = 0; j < 25; j++) {
+		for (int j = 0; j < col; j++) {
 			result[i][j] = 0;
 		}
 	}
@@ -72,7 +83,7 @@ int** Map::LoadTiles(const char* f,int col,int row) {
 
 	int i = 0;
 	while (getline(file, line)) {
-		for (int j = 0; j < 25; j++) {
+		for (int j = 0; j < col; j++) {
 			
 			
 
@@ -98,9 +109,7 @@ int** Map::LoadTiles(const char* f,int col,int row) {
 
 
 
-int Map::getCollisionTile(int row, int col) {
-	return collisionTiles[row][col];
-}
+
 
 
 void Map::render(SDL_Renderer * renderer,Camera * camera) {
@@ -121,8 +130,8 @@ void Map::render(SDL_Renderer * renderer,Camera * camera) {
 	
 	//i = y cord
 	//j = x cord
-	for (int i = 0; i < 25; i++) {
-		for (int j = 0; j < 25; j++) {
+	for (int i = 0; i < 100; i++) {
+		for (int j = 0; j < 100; j++) {
 			
 			//find x,y on the tileset based on width and height
 			if (tiles[i][j] != 0) {
@@ -138,8 +147,8 @@ void Map::render(SDL_Renderer * renderer,Camera * camera) {
 					destRect.y = (targetY - cameraY); 
 					
 
-					srcRect.x = TILEW * ((tileID - 1) % 32);		// to calculate x , x = tile width * (id-1 % size per row for tileset (32) )  
-					srcRect.y = TILEH * ((tileID - 1) / 32);		//to calculate y, y = tile height * floor (id-1/ size per row tileset (32) )
+					srcRect.x = TILEW * ((tileID - 1) % 24);		// to calculate x , x = tile width * (id-1 % size per row for tileset (32) )  
+					srcRect.y = TILEH * ((tileID - 1) / 24);		//to calculate y, y = tile height * floor (id-1/ size per row tileset (32) )
 					
 					SDL_RenderCopy(renderer, tileSet, &srcRect, &destRect);
 				}

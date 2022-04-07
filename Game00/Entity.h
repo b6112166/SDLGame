@@ -1,18 +1,22 @@
 #pragma once
 
 #include "direction.h"
-#include "Game.h"
+#include "SDL/SDL.h"
+#include "SDL/SDL_image.h"
+#include "Camera.h"
+#include <iostream>
+using namespace std;
 //interface class
 class Entity
 {
 
 public:
-	Entity(int x, int y,int w,int h,int type):
+	Entity(int x, int y,int w,int h):
 	x(x),
 	y(y),
 	width(w),
-	height(h),
-	type(type)
+	height(h)
+	
 	{
 		
 		
@@ -24,11 +28,10 @@ public:
 	int getPosY() { return y; };
 	int getWidth() { return width; };
 	int getHeight() { return height; };
-	virtual void update() {};
-
+	
 	
 protected:
-	int type;
+	
 	//bool visible;
 	int x ;
 	int y ;
