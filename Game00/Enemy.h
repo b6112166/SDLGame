@@ -8,10 +8,15 @@ public:
 
 	void update() ;
 
+	void setDead() { dead = true; };
+
+	bool isDead(){ return dead; };
+
 	void render(SDL_Renderer * renderer,Camera* camera);
 
 private:
 	
+	bool dead = false;
 	SDL_Rect displayRect;
 	SDL_Texture * enemyTexture;
 };

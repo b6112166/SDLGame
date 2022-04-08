@@ -9,6 +9,10 @@
 #include <vector>
 #include "Camera.h"
 #include "Enemy.h"
+#include "Sword.h"
+#include "SDL/SDL_ttf.h"
+#include "SDL/SDL_mixer.h"
+
 using namespace std;
 /*
 struct Camera {
@@ -51,13 +55,18 @@ private:
 	SDL_Window* gameWindow;
 	SDL_Renderer* renderer;
 
+	Mix_Music * bgm;
+	Mix_Chunk* slashSound;
+	Sword * playerSword;
 
-	class Map* map;
-	
+	Map* map;
+	TTF_Font* font;
+	int score;
+
 	SDL_Texture* loadTexture(string filename);
-	class Camera * mainCamera;
+	Camera * mainCamera;
 	//entity list
-	vector<Enemy > enemyList; //does not include the player
+	vector<Enemy * > enemyList; //does not include the player
 	SDL_Texture* enemyTexture;
 };
 

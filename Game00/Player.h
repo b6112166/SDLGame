@@ -10,7 +10,7 @@ public:
 		dead = false;
 		lastX = x;
 		lastY = y;
-
+		attackDirection = direction::d_down;
 
 	};
 	~Player() { SDL_DestroyTexture(playerTexture); };
@@ -29,7 +29,7 @@ public:
 	void handleCollision(int);
 
 	void render(SDL_Renderer* renderer,class Camera * camera); 
-	
+	direction getAttackDirection() { return attackDirection; };
 
 
 
@@ -38,6 +38,7 @@ private:
 
 	int movement_speed = 10;
 
+	direction attackDirection;
 
 	int lastX;
 	int lastY;
